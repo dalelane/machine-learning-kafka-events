@@ -1,0 +1,35 @@
+#
+# topic for the raw sensor readings
+#
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: sensor-topic
+  labels:
+    strimzi.io/cluster: dale
+spec:
+  config:
+    # keep the last 3 hours of raw sensor readings
+    retention.ms: 10800000
+    segment.bytes: 1073741824
+  partitions: 1
+  replicas: 3
+  topicName: IPHONE.SENSORS
+---
+#
+# topic for the machine learning predictions
+#
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: activity-topic
+  labels:
+    strimzi.io/cluster: dale
+spec:
+  config:
+    # keep the last 10 days of activity predictions
+    retention.ms: 2592000000
+    segment.bytes: 1073741824
+  partitions: 1
+  replicas: 3
+  topicName: IPHONE.ACTIVITY

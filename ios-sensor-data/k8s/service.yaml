@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ios-sensor-data-bridge
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: ios-sensor-data-bridge
+  type: ClusterIP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ios-sensor-data-bridge
+spec:
+  port:
+    targetPort: 3000
+  to:
+    kind: Service
+    name: ios-sensor-data-bridge

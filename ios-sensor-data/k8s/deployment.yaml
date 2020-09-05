@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ios-sensor-data-bridge
+spec:
+  selector:
+    matchLabels:
+      app: ios-sensor-data-bridge
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ios-sensor-data-bridge
+    spec:
+      containers:
+      - name: bridge
+        image: dalelane/ios-sensor-data-bridge:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: KAFKA_BOOTSTRAP
+          value: "dale-kafka-bootstrap:9092"
+        - name: RAW_EVENTS_TOPIC
+          value: "IPHONE.SENSORS"
